@@ -1,0 +1,15 @@
+# Ignore compiled files
+/build/
+*.exe
+
+# Ignore temporary/editor files
+*.log
+*.obj
+*.o
+*.pdb
+*.tmp
+*.user
+*.suo
+*.vcxproj*
+*.DS_Store
+Thumbs.db
