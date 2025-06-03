@@ -5,10 +5,11 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_mixer.h>
+#include <map>
 
-#include "interfaces/game_interface.hpp"
-#include "input_handler.hpp"
-#include "managers/audio_manager.hpp"
+#include "game_interface.hpp"
+#include "../systems/input/input_handler.hpp"
+#include "../systems/audio/audio_manager.hpp"
 
 class Game : public IGame
 {
@@ -26,7 +27,7 @@ private:
     void render();
     void clean();
 
-    void initManagers();
+    void initSystems();
     void loadAssets();
 
 public:

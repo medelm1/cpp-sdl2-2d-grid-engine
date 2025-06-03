@@ -57,20 +57,28 @@ bool Game::init()
 
     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 
-    initManagers();
+    initSystems();
     loadAssets();
+
+    // play background music
+    AudioManager::getInstance().playMusic("clouds");
 
     return true;
 }
 
-void Game::initManagers()
+void Game::initSystems()
 {
+    // Init audio system
     AudioManager::getInstance().init(this);
+    AudioManager::getInstance().addChannel("channel_1");
+    AudioManager::getInstance().addChannel("channel_2");
 }
 
 void Game::loadAssets()
 {
-    AudioManager::getInstance().load("assets/sounds/fairy-magic-wand.wav", "fairy-magic-wand", AudioManager::Type::EFFECT);
+    AudioManager::getInstance().loadMusic("clouds", "assets/sounds/clouds.mp3");
+    AudioManager::getInstance().loadSound("fairy-magic-wand", "assets/sounds/fairy-magic-wand.wav");
+    AudioManager::getInstance().loadSound("magic-church-bell", "assets/sounds/magic-church-bell.mp3");
 }
 
 void Game::run()
@@ -102,7 +110,14 @@ void Game::update()
 
     if (InputHandler::getInstance().getMouseButtonState(MouseButton::MOUSE_BUTTON_LEFT))
     {
-        AudioManager::getInstance().play("fairy-magic-wand");
+        AudioManager::getInstance().playSound("fairy-magic-wand", "channel_1", LoopMode::PLAY_ONCE);
+        // AudioManager::getInstance().pauseMusic();
+    }
+
+    if (InputHandler::getInstance().getMouseButtonState(MouseButton::MOUSE_BUTTON_RIGHT))
+    {
+        AudioManager::getInstance().playSound("magic-church-bell", "channel_2", LoopMode::PLAY_ONCE);
+        // AudioManager::getInstance().resumeMusic();
     }
 }
 

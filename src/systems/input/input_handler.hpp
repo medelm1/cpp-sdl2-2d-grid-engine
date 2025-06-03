@@ -5,8 +5,8 @@
 #include <algorithm>
 #include <SDL.h>
 
-#include "interfaces/game_interface.hpp"
-#include "vector_2d.hpp"
+#include "../../game/game_interface.hpp"
+#include "../../utils/vector_2d.hpp"
 #include "enums/mouse_button.hpp"
 
 class InputHandler

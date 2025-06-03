@@ -5,7 +5,12 @@ REM Batch Script to Compile or Run the C++ Project
 REM === Configuration ===
 set OUTPUT_NAME=g2de
 set SOURCE_DIR=src
-set SOURCE_FILES=%SOURCE_DIR%\*.cpp %SOURCE_DIR%\core\*.cpp %SOURCE_DIR%\core\managers\*.cpp 
+set SOURCE_FILES=%SOURCE_DIR%\*.cpp ^
+				%SOURCE_DIR%\game\*.cpp ^
+				%SOURCE_DIR%\systems\audio\*.cpp ^
+				%SOURCE_DIR%\systems\input\*.cpp ^
+				%SOURCE_DIR%\utils\*.cpp
+
 set BUILD_DIR=build
 set THIRD_PARTY_DIR=third_party
 set INCLUDE_DIRS=-I%SOURCE_DIR% -I%THIRD_PARTY_DIR%\SDL2\include -L%THIRD_PARTY_DIR%\SDL2\lib -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf
