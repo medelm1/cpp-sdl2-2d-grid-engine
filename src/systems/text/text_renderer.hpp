@@ -4,35 +4,33 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 #include <string>
+#include <vector>
 #include <unordered_map>
 #include <iostream>
 
 #include "../../game/game_interface.hpp"
+#include "text_object.hpp"
+#include "../../utils/vector_2d.hpp"
 
 class TextRenderer
 {
 private:
     static TextRenderer* instance;
 
-    std::unordered_map<size_t, TTF_Font*> fontcache;
-    std::string fontpath;
+    std::unordered_map<size_t, TTF_Font*> m_fontcache;
+    std::string m_fontpath;
 
-    IGame* gameCtx;
-    bool initialized = false;
+    SDL_Renderer* m_renderer;
+
+    bool m_initialized = false;
 
 private:
     TextRenderer();
     ~TextRenderer();
 
-    void render(
-        const std::string& text,
-        TTF_Font* font,
-        size_t fontsize,
-        int x,
-        int y,
-        SDL_Renderer* renderer,
-        SDL_Color fontcolor
-    );
+    bool requireInitialization() const;
+
+    TTF_Font* getCachedFrontOrLoad(int fontsize);
 
 public:
     TextRenderer(const TextRenderer&) = delete;
@@ -40,17 +38,10 @@ public:
 
     static TextRenderer& getInstance();
 
-    void init(IGame* initGameCtx, const std::string& initFontpath);
+    void init(SDL_Renderer* renderer, const std::string& fontpath);
 
-    void write(
-        const std::string& text,
-        size_t fontsize,
-        int x,
-        int y,
-        SDL_Renderer* renderer,
-        SDL_Color fontcolor = {0xFF, 0xFF, 0xFF, 0xFF},
-        SDL_Color shadowcolor = {0xFF, 0xFF, 0xFF, 0xFF}
-    );
+    void render(TextObject text, Vector2D position);
+    void renderAll(const std::vector<TextObject> texts, Vector2D position, Vector2D offset);
 };
 
 #endif

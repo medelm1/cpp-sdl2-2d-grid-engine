@@ -6,6 +6,7 @@
 #include <SDL_image.h>
 #include <SDL_mixer.h>
 #include <map>
+#include <vector>
 
 #include "game_interface.hpp"
 #include "../systems/input/input_handler.hpp"
@@ -21,6 +22,9 @@ private:
     SDL_Window* window;
     SDL_Renderer* renderer;
     bool isRunning;
+
+    TextObject text1;
+    std::vector<TextObject> menuItems;
 
 private:
     Game();

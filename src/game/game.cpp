@@ -75,7 +75,18 @@ void Game::initSystems()
     AudioManager::getInstance().addChannel("channel_ui");
 
     // Init text rendering system
-    TextRenderer::getInstance().init(this, "assets/fonts/prstartk.ttf");
+    TextRenderer::getInstance().init(renderer, "assets/fonts/prstartk.ttf");
+
+    TextStyle style = TextStyle(12, {0xFF, 0xFF, 0xFF, 0xFF}, {0x00, 0x00, 0x00, 0xFF});
+
+    text1 = TextObject("Hello from text object", style);
+
+    TextStyle menuItemsStyle = TextStyle(8, {0xFF, 0xFF, 0xFF, 0xFF}, {0x00, 0x00, 0x00, 0xFF});
+
+    menuItems.push_back(TextObject("New Game", menuItemsStyle));
+    menuItems.push_back(TextObject("Load Game", menuItemsStyle));
+    menuItems.push_back(TextObject("Options", menuItemsStyle));
+    menuItems.push_back(TextObject("Quit", menuItemsStyle));
 }
 
 void Game::loadAssets()
@@ -131,10 +142,7 @@ void Game::render()
     SDL_SetRenderDrawColor(renderer, 0x6F, 0xB9, 0x42, 0xFF);
     SDL_RenderClear(renderer);
 
-    TextRenderer::getInstance().write("Spaceshooter", 16, 32, 32, renderer, {0xFF, 0xFF, 0xFF, 0xFF}, {0x00, 0x00, 0x00, 0xFF});
-    TextRenderer::getInstance().write("New Game", 10, 32, 100, renderer, {0xFF, 0xFF, 0xFF, 0xFF}, {0x00, 0x00, 0x00, 0xFF});
-    TextRenderer::getInstance().write("Settings", 10, 32, 130, renderer, {0xFF, 0xFF, 0xFF, 0xFF}, {0x00, 0x00, 0x00, 0xFF});
-    TextRenderer::getInstance().write("Quit", 10, 32, 160, renderer, {0xFF, 0xFF, 0xFF, 0xFF}, {0x00, 0x00, 0x00, 0xFF});
+    TextRenderer::getInstance().renderAll(menuItems, {32, 32}, {80, 0});
 
     SDL_RenderPresent(renderer);
 }

@@ -6,7 +6,6 @@ class IGame
 
 public:
     virtual void quit() = 0;
-
 };
 
 #endif

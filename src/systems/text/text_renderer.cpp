@@ -9,7 +9,7 @@ TextRenderer::TextRenderer()
 
 TextRenderer::~TextRenderer()
 {
-    for (auto& pair : fontcache)
+    for (auto& pair : m_fontcache)
     {
         if (pair.second)
         {
@@ -28,18 +28,20 @@ TextRenderer& TextRenderer::getInstance()
     return *instance;
 }
 
-void TextRenderer::init(IGame* initGameCtx, const std::string& initFontpath)
+void TextRenderer::init(SDL_Renderer* renderer, const std::string& fontpath)
 {
-    gameCtx = initGameCtx;
-    fontpath = initFontpath;
+    if (m_initialized) return;
 
-    if (gameCtx == nullptr)
+    m_renderer = renderer;
+    m_fontpath = fontpath;
+
+    if (m_renderer == nullptr)
     {
-        std::cerr << "[TextRenderer] Error: Game context not initialized." << std::endl;
+        std::cerr << "[TextRenderer] Error: SDL renderer not initialized." << std::endl;
         return;
     }
 
-    if (fontpath.empty())
+    if (m_fontpath.empty())
     {
         std::cerr << "[TextRenderer] Error: Font path is empty." << std::endl;
         return;
@@ -51,89 +53,91 @@ void TextRenderer::init(IGame* initGameCtx, const std::string& initFontpath)
         return;
     }
 
-    initialized = true;
+    m_initialized = true;
 }
 
-void TextRenderer::render(
-    const std::string& text,
-    TTF_Font* font,
-    size_t fontsize,
-    int x,
-    int y,
-    SDL_Renderer* renderer,
-    SDL_Color fontcolor
-)
+bool TextRenderer::requireInitialization() const
 {
-    if (!initialized)
+    if (!m_initialized)
     {
-        std::cerr << "[TextRenderer] Error: Not initialized" << std::endl;
-        return;
+        std::cerr << "[TextRenderer] Error: TextRenderer not initialized. Call init() first" << std::endl;
+        return false;
     }
-
-    SDL_Surface* textSurface = TTF_RenderText_Blended(font, text.c_str(), fontcolor);
-
-    if (!textSurface)
-    {
-        std::cerr << "[TextRenderer] TTF_RenderText_Blended Error: " << TTF_GetError() << std::endl;
-        gameCtx->quit();
-        return;
-    }
-
-    SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
-    SDL_FreeSurface(textSurface);
-
-    if (!textTexture)
-    {
-        std::cerr << "[TextRenderer] SDL_CreateTextureFromSurface Error: " << SDL_GetError() << std::endl;
-        gameCtx->quit();
-        return;
-    }
-
-    SDL_Rect rect = {x, y, 0, 0};
-    SDL_QueryTexture(textTexture, nullptr, nullptr, &rect.w, &rect.h);
-
-    SDL_RenderCopy(renderer, textTexture, nullptr, &rect);
-    SDL_DestroyTexture(textTexture);
+    return true;
 }
 
-void TextRenderer::write(
-    const std::string& text,
-    size_t fontsize,
-    int x,
-    int y,
-    SDL_Renderer* renderer,
-    SDL_Color fontcolor,
-    SDL_Color shadowcolor
-)
+TTF_Font* TextRenderer::getCachedFrontOrLoad(int fontsize)
 {
-    if (!initialized)
+    if (m_fontcache.find(fontsize) == m_fontcache.end())
     {
-        std::cerr << "[TextRenderer] Error: Not initialized" << std::endl;
-        return;
-    }
+        TTF_Font* font = TTF_OpenFont(m_fontpath.c_str(), fontsize);
 
-    // Check if the font with the requested size is already cached
-    TTF_Font* font = nullptr;
-
-    if (fontcache.find(fontsize) == fontcache.end())
-    {
-        font = TTF_OpenFont(fontpath.c_str(), fontsize);
         if (!font)
         {
-            std::cerr << "TTF_OpenFont Error: " << TTF_GetError() << std::endl;
-            gameCtx->quit();
-            return;
+            std::cerr << "[TextRenderer] TTF_OpenFont Error: " << TTF_GetError() << std::endl;
+            return nullptr;
         }
-        fontcache[fontsize] = font;
+        m_fontcache[fontsize] = font;
+
+        return font;
     }
     else
     {
-        font = fontcache[fontsize];
+        return m_fontcache[fontsize];
+    }
+}
+
+void TextRenderer::render(TextObject text, Vector2D position)
+{
+    requireInitialization();
+
+    TTF_Font* font = getCachedFrontOrLoad(text.getStyle().getFontsize());
+    if (!font) return;
+
+    // Render both the main text and its shadow:
+    // The shadow is slightly offset to give a depth effect, improving readability.
+    // Both are created as textures from surfaces, then drawn in order: shadow first, then text.
+
+    SDL_Surface* textSurface = TTF_RenderText_Blended(font, text.getText().c_str(), text.getStyle().getTextColor());
+    SDL_Surface* shadowSurface = TTF_RenderText_Blended(font, text.getText().c_str(), text.getStyle().getShadowColor());
+
+    if (!textSurface || !shadowSurface)
+    {
+        std::cerr << "[TextRenderer] TTF_RenderText_Blended Error: " << TTF_GetError() << std::endl;
+        return;
     }
 
-    // Render shadow
-    render(text, font, fontsize, x-1, y+1, renderer, shadowcolor);
+    SDL_Texture* textTexture = SDL_CreateTextureFromSurface(m_renderer, textSurface);
+    SDL_Texture* shadowTexture = SDL_CreateTextureFromSurface(m_renderer, shadowSurface);
+    SDL_FreeSurface(textSurface);
+    SDL_FreeSurface(shadowSurface);
 
-    // Render text
-    render(text, font, fontsize, x, y, renderer, fontcolor);
+    if (!textTexture || !shadowTexture)
+    {
+        std::cerr << "[TextRenderer] SDL_CreateTextureFromSurface Error: " << SDL_GetError() << std::endl;
+        return;
+    }
+
+    SDL_Rect textRect = {(int)position.getX(), (int)position.getY(), 0, 0};
+    SDL_Rect shadowRect = {(int)position.getX()-1, (int)position.getY()+1, 0, 0};
+
+    SDL_QueryTexture(textTexture, nullptr, nullptr, &textRect.w, &textRect.h);
+    SDL_QueryTexture(shadowTexture, nullptr, nullptr, &shadowRect.w, &shadowRect.h);
+
+    SDL_RenderCopy(m_renderer, shadowTexture, nullptr, &shadowRect);
+    SDL_RenderCopy(m_renderer, textTexture, nullptr, &textRect);
+
+    SDL_DestroyTexture(textTexture);
+    SDL_DestroyTexture(shadowTexture);
+}
+
+void TextRenderer::renderAll(const std::vector<TextObject> texts, Vector2D position, Vector2D offset)
+{
+    int itemCount = 0;
+
+    for (auto& text : texts)
+    {
+        render(text, position + offset*itemCount);
+        itemCount++;
+    }
 }
