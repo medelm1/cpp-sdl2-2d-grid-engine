@@ -61,7 +61,7 @@ bool Game::init()
     loadAssets();
 
     // play background music
-    AudioManager::getInstance().playMusic("clouds");
+    // AudioManager::getInstance().playMusic("clouds");
 
     return true;
 }
@@ -72,6 +72,10 @@ void Game::initSystems()
     AudioManager::getInstance().init(this);
     AudioManager::getInstance().addChannel("channel_1");
     AudioManager::getInstance().addChannel("channel_2");
+    AudioManager::getInstance().addChannel("channel_ui");
+
+    // Init text rendering system
+    TextRenderer::getInstance().init(this, "assets/fonts/prstartk.ttf");
 }
 
 void Game::loadAssets()
@@ -79,6 +83,7 @@ void Game::loadAssets()
     AudioManager::getInstance().loadMusic("clouds", "assets/sounds/clouds.mp3");
     AudioManager::getInstance().loadSound("fairy-magic-wand", "assets/sounds/fairy-magic-wand.wav");
     AudioManager::getInstance().loadSound("magic-church-bell", "assets/sounds/magic-church-bell.mp3");
+    AudioManager::getInstance().loadSound("menu-click", "assets/sounds/menu-click.mp3");
 }
 
 void Game::run()
@@ -108,23 +113,28 @@ void Game::update()
 {
     InputHandler::getInstance().update(this);
 
-    if (InputHandler::getInstance().getMouseButtonState(MouseButton::MOUSE_BUTTON_LEFT))
-    {
-        AudioManager::getInstance().playSound("fairy-magic-wand", "channel_1", LoopMode::PLAY_ONCE);
-        // AudioManager::getInstance().pauseMusic();
-    }
+    // if (InputHandler::getInstance().getMouseButtonState(MouseButton::MOUSE_BUTTON_LEFT))
+    // {
+    //     AudioManager::getInstance().pauseMusic();
+    //     AudioManager::getInstance().playSound("menu-click", "channel_ui", LoopMode::PLAY_ONCE);
+    // }
 
-    if (InputHandler::getInstance().getMouseButtonState(MouseButton::MOUSE_BUTTON_RIGHT))
-    {
-        AudioManager::getInstance().playSound("magic-church-bell", "channel_2", LoopMode::PLAY_ONCE);
-        // AudioManager::getInstance().resumeMusic();
-    }
+    // if (InputHandler::getInstance().getMouseButtonState(MouseButton::MOUSE_BUTTON_RIGHT))
+    // {
+    //     AudioManager::getInstance().playSound("menu-click", "channel_ui", LoopMode::PLAY_ONCE);
+    //     AudioManager::getInstance().resumeMusic();
+    // }
 }
 
 void Game::render()
 {
     SDL_SetRenderDrawColor(renderer, 0x6F, 0xB9, 0x42, 0xFF);
     SDL_RenderClear(renderer);
+
+    TextRenderer::getInstance().write("Spaceshooter", 16, 32, 32, renderer, {0xFF, 0xFF, 0xFF, 0xFF}, {0x00, 0x00, 0x00, 0xFF});
+    TextRenderer::getInstance().write("New Game", 10, 32, 100, renderer, {0xFF, 0xFF, 0xFF, 0xFF}, {0x00, 0x00, 0x00, 0xFF});
+    TextRenderer::getInstance().write("Settings", 10, 32, 130, renderer, {0xFF, 0xFF, 0xFF, 0xFF}, {0x00, 0x00, 0x00, 0xFF});
+    TextRenderer::getInstance().write("Quit", 10, 32, 160, renderer, {0xFF, 0xFF, 0xFF, 0xFF}, {0x00, 0x00, 0x00, 0xFF});
 
     SDL_RenderPresent(renderer);
 }

@@ -10,6 +10,7 @@
 #include "game_interface.hpp"
 #include "../systems/input/input_handler.hpp"
 #include "../systems/audio/audio_manager.hpp"
+#include "../systems/text/text_renderer.hpp"
 
 class Game : public IGame
 {
