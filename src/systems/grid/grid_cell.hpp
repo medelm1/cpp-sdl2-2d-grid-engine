@@ -43,6 +43,8 @@ public:
 
     GridCell* getNextNeighbor(Direction direction) const;
 
+    void transferNeighborsTo(GridCell* cellptr);
+
     bool operator==(const GridCell& other);
     bool operator!=(const GridCell& other);
 

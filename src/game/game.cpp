@@ -39,7 +39,7 @@ bool Game::init()
         SDL_WINDOWPOS_CENTERED,
         SDL_WINDOWPOS_CENTERED,
         640,
-        460,
+        480,
         SDL_WINDOW_SHOWN
     );
 
@@ -87,6 +87,9 @@ void Game::initSystems()
     menuItems.push_back(TextObject("Load Game", menuItemsStyle));
     menuItems.push_back(TextObject("Options", menuItemsStyle));
     menuItems.push_back(TextObject("Quit", menuItemsStyle));
+
+    // Init grid
+    mainGrid = Grid(15, 20, 32);
 }
 
 void Game::loadAssets()
@@ -139,10 +142,12 @@ void Game::update()
 
 void Game::render()
 {
-    SDL_SetRenderDrawColor(renderer, 0x6F, 0xB9, 0x42, 0xFF);
+    SDL_SetRenderDrawColor(renderer, 0x18, 0x21, 0x28, 0xFF);
     SDL_RenderClear(renderer);
 
-    TextRenderer::getInstance().renderAll(menuItems, {32, 32}, {80, 0});
+    // TextRenderer::getInstance().renderAll(menuItems, {32, 32}, {80, 0});
+
+    mainGrid.drawLines(renderer);
 
     SDL_RenderPresent(renderer);
 }
