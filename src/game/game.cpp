@@ -90,7 +90,7 @@ void Game::loadAssets()
 
     // Load images
     TextureManager::getInstance().load("green-gem", "assets/images/green-gem.png");
-    // TextureManager::getInstance().load("green-gem", "assets/images/green-gem.png");
+    
 }
 
 void Game::run()
@@ -127,18 +127,6 @@ void Game::render()
     SDL_RenderClear(renderer);
 
     mainGrid.drawLines(renderer);
-
-
-    // TESTING: TextureManager
-    // Render green-gem
-    SDL_Texture* greenGem = TextureManager::getInstance().getTexture("green-gem");
-    SDL_Rect dstRect = {32, 32, 32, 32};
-
-    if (greenGem)
-    {
-        SDL_RenderCopy(renderer, greenGem, nullptr, &dstRect);
-    }
-    // TESTING: TextureManager
 
     SDL_RenderPresent(renderer);
 }
