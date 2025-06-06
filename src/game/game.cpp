@@ -29,10 +29,10 @@ bool Game::init()
         return false;
     }
 
-    if ((IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG) & (IMG_INIT_PNG | IMG_INIT_JPG)) == 0) {
-        std::cerr << "Error: SDL_image initialization failed. IMG Error: " << IMG_GetError() << "\n";
-        return false;
-    }
+    // if ((IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG) & (IMG_INIT_PNG | IMG_INIT_JPG)) == 0) {
+    //     std::cerr << "Error: SDL_image initialization failed. IMG Error: " << IMG_GetError() << "\n";
+    //     return false;
+    // }
 
     window = SDL_CreateWindow(
         "CppPlayground - SDL2",
@@ -73,16 +73,23 @@ void Game::initSystems()
     // Init text rendering system
     TextRenderer::getInstance().init(renderer, "assets/fonts/prstartk.ttf");
 
+    // Init Texture management system
+    TextureManager::getInstance().init(renderer);
+
     // Init grid
     mainGrid = Grid(15, 20, 32);
 }
 
 void Game::loadAssets()
 {
+    // Load sounds & music
     AudioManager::getInstance().loadMusic("clouds", "assets/sounds/clouds.mp3");
     AudioManager::getInstance().loadSound("fairy-magic-wand", "assets/sounds/fairy-magic-wand.wav");
     AudioManager::getInstance().loadSound("magic-church-bell", "assets/sounds/magic-church-bell.mp3");
     AudioManager::getInstance().loadSound("menu-click", "assets/sounds/menu-click.mp3");
+
+    // Load images
+    TextureManager::getInstance().load("green-gem", "assets/images/green-gem.png");
 }
 
 void Game::run()
@@ -119,6 +126,17 @@ void Game::render()
     SDL_RenderClear(renderer);
 
     mainGrid.drawLines(renderer);
+
+
+    // Render green-gem
+    SDL_Texture* greenGem = TextureManager::getInstance().getTexture("green-gem");
+    SDL_Rect dstRect = {32, 32, 32, 32};
+
+    if (greenGem)
+    {
+        SDL_RenderCopy(renderer, greenGem, nullptr, &dstRect);
+    }
+
 
     SDL_RenderPresent(renderer);
 }

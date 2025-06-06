@@ -12,6 +12,7 @@
 #include "../systems/input/input_handler.hpp"
 #include "../systems/audio/audio_manager.hpp"
 #include "../systems/text/text_renderer.hpp"
+#include "../systems/texture/texture_manager.hpp"
 #include "../systems/grid/grid.hpp"
 
 class Game : public IGame

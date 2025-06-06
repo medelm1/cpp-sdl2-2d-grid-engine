@@ -11,6 +11,7 @@ set SOURCE_FILES=%SOURCE_DIR%\*.cpp ^
 				%SOURCE_DIR%\systems\input\*.cpp ^
 				%SOURCE_DIR%\systems\text\*.cpp ^
 				%SOURCE_DIR%\systems\grid\*.cpp ^
+				%SOURCE_DIR%\systems\texture\*.cpp ^
 				%SOURCE_DIR%\utils\*.cpp
 
 set BUILD_DIR=build
