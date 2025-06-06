@@ -60,9 +60,6 @@ bool Game::init()
     initSystems();
     loadAssets();
 
-    // play background music
-    // AudioManager::getInstance().playMusic("clouds");
-
     return true;
 }
 
@@ -72,21 +69,9 @@ void Game::initSystems()
     AudioManager::getInstance().init(this);
     AudioManager::getInstance().addChannel("channel_1");
     AudioManager::getInstance().addChannel("channel_2");
-    AudioManager::getInstance().addChannel("channel_ui");
 
     // Init text rendering system
     TextRenderer::getInstance().init(renderer, "assets/fonts/prstartk.ttf");
-
-    TextStyle style = TextStyle(12, {0xFF, 0xFF, 0xFF, 0xFF}, {0x00, 0x00, 0x00, 0xFF});
-
-    text1 = TextObject("Hello from text object", style);
-
-    TextStyle menuItemsStyle = TextStyle(8, {0xFF, 0xFF, 0xFF, 0xFF}, {0x00, 0x00, 0x00, 0xFF});
-
-    menuItems.push_back(TextObject("New Game", menuItemsStyle));
-    menuItems.push_back(TextObject("Load Game", menuItemsStyle));
-    menuItems.push_back(TextObject("Options", menuItemsStyle));
-    menuItems.push_back(TextObject("Quit", menuItemsStyle));
 
     // Init grid
     mainGrid = Grid(15, 20, 32);
@@ -126,26 +111,12 @@ void Game::run()
 void Game::update()
 {
     InputHandler::getInstance().update(this);
-
-    // if (InputHandler::getInstance().getMouseButtonState(MouseButton::MOUSE_BUTTON_LEFT))
-    // {
-    //     AudioManager::getInstance().pauseMusic();
-    //     AudioManager::getInstance().playSound("menu-click", "channel_ui", LoopMode::PLAY_ONCE);
-    // }
-
-    // if (InputHandler::getInstance().getMouseButtonState(MouseButton::MOUSE_BUTTON_RIGHT))
-    // {
-    //     AudioManager::getInstance().playSound("menu-click", "channel_ui", LoopMode::PLAY_ONCE);
-    //     AudioManager::getInstance().resumeMusic();
-    // }
 }
 
 void Game::render()
 {
     SDL_SetRenderDrawColor(renderer, 0x18, 0x21, 0x28, 0xFF);
     SDL_RenderClear(renderer);
-
-    // TextRenderer::getInstance().renderAll(menuItems, {32, 32}, {80, 0});
 
     mainGrid.drawLines(renderer);
 

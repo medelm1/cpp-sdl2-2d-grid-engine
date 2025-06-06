@@ -24,9 +24,6 @@ private:
     SDL_Renderer* renderer;
     bool isRunning;
 
-    TextObject text1;
-    std::vector<TextObject> menuItems;
-
     Grid mainGrid;
 
 private:

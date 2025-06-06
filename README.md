@@ -1,7 +1,7 @@
-# cpp_sdl2_2d_grid_engine
+# C++/SDL2 2D Grid-Based Game Engine
 
-A simple 2D grid-based game engine written in C++ using SDL2.  
-Designed for building classic tile-based games like RPGs and adventure games (inspired by games like Pokémon and The Legend of Zelda).
+A simple 2D grid-based game engine written in C++ using SDL2.
+Designed to support classic tile-based environments and facilitate experimentation with AI algorithms, pathfinding, and other gameplay systems.
 
 ## Features
 
