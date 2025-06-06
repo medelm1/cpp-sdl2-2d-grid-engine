@@ -130,7 +130,7 @@ size_t Grid::getIndexFromCoord(const Vector2D& coord, bool validate)
 {
     if (validate) validateCoord(coord);
 
-    return coord.getX() * m_cols + coord.getX();
+    return coord.getY() * m_cols + coord.getX();
 }
 
 void Grid::drawLines(SDL_Renderer* renderer)

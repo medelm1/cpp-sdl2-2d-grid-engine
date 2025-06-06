@@ -1,6 +1,7 @@
 #ifndef GRID_H
 #define GRID_H
 
+#include <iostream>
 #include <unordered_map>
 #include <functional>
 #include <vector>
