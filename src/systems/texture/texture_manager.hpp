@@ -33,6 +33,8 @@ public:
     void init(SDL_Renderer* renderer);
 
     void load(const std::string& label, const std::string& filename);
+    void unload(const std::string& label);
+    void unloadAll();
     
     SDL_Texture* getTexture(const std::string& label);
 

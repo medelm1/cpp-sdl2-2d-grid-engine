@@ -61,7 +61,16 @@ bool TextureManager::requireInitialization() const
 
 void TextureManager::load(const std::string& label, const std::string& filename)
 {
-    requireInitialization();
+    if (!requireInitialization()) return;
+
+    // Skip loading if texture already exists
+    if (m_textures.find(label) != m_textures.end())
+    {
+        std::cerr << "[TextureManager] Warning: A texture with the label '" << label << "' is already loaded. "
+        << "Use a unique label or unload the existing texture first." << std::endl;
+        
+        return;    
+    }
 
     SDL_Surface* tmpSurface = IMG_Load(filename.c_str());
 
@@ -87,9 +96,34 @@ void TextureManager::load(const std::string& label, const std::string& filename)
     m_textures[label] = texture;
 }
 
+void TextureManager::unload(const std::string& label)
+{
+    auto it = m_textures.find(label);
+
+    if (it == m_textures.end())
+    {  
+        std::cerr << "[TextureManager] Warning: Cannot unload texture. Label '" << label << "' not found." << std::endl;
+        
+        return;
+    }
+
+    SDL_DestroyTexture(it->second);
+    m_textures.erase(it->first);
+
+}
+
+void TextureManager::unloadAll()
+{
+    for (auto [_, texture] : m_textures)
+    {
+        SDL_DestroyTexture(texture);
+    }
+    m_textures.clear();
+}
+
 SDL_Texture* TextureManager::getTexture(const std::string& label)
 {
-    requireInitialization();
+    if (!requireInitialization()) return nullptr;
 
     auto it = m_textures.find(label);
 
