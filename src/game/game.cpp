@@ -4,7 +4,7 @@ Game* Game::instance = nullptr;
 
 Game::Game()
     : window(nullptr), renderer(nullptr), isRunning(false)
-{
+{ 
 
 }
 
@@ -28,11 +28,6 @@ bool Game::init()
         std::cerr << "Error: SDL initialization failed. SDL Error: " << SDL_GetError() << "\n";
         return false;
     }
-
-    // if ((IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG) & (IMG_INIT_PNG | IMG_INIT_JPG)) == 0) {
-    //     std::cerr << "Error: SDL_image initialization failed. IMG Error: " << IMG_GetError() << "\n";
-    //     return false;
-    // }
 
     window = SDL_CreateWindow(
         "CppPlayground - SDL2",
@@ -59,6 +54,18 @@ bool Game::init()
 
     initSystems();
     loadAssets();
+
+
+
+    // Create fire sprite
+
+    fireSprite = new Sprite(
+        TextureManager::getInstance().getTexture("fire"),
+        GridSize{4, 1},
+        Scale{1, 1},
+        true
+    );
+
 
     return true;
 }
@@ -90,7 +97,8 @@ void Game::loadAssets()
 
     // Load images
     TextureManager::getInstance().load("green-gem", "assets/images/green-gem.png");
-    
+    TextureManager::getInstance().load("fire", "assets/images/fire.png");
+
 }
 
 void Game::run()
@@ -127,6 +135,9 @@ void Game::render()
     SDL_RenderClear(renderer);
 
     mainGrid.drawLines(renderer);
+
+
+    fireSprite->render(renderer, Vector2D{6, 4});
 
     SDL_RenderPresent(renderer);
 }

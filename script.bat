@@ -7,11 +7,13 @@ set OUTPUT_NAME=g2de
 set SOURCE_DIR=src
 set SOURCE_FILES=%SOURCE_DIR%\*.cpp ^
 				%SOURCE_DIR%\game\*.cpp ^
+				%SOURCE_DIR%\systems\common\*.cpp ^
 				%SOURCE_DIR%\systems\audio\*.cpp ^
 				%SOURCE_DIR%\systems\input\*.cpp ^
 				%SOURCE_DIR%\systems\text\*.cpp ^
 				%SOURCE_DIR%\systems\grid\*.cpp ^
 				%SOURCE_DIR%\systems\texture\*.cpp ^
+				%SOURCE_DIR%\systems\sprite-animation\*.cpp ^
 				%SOURCE_DIR%\utils\*.cpp
 
 set BUILD_DIR=build

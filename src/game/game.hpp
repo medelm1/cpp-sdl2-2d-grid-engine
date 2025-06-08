@@ -14,6 +14,7 @@
 #include "../systems/text/text_renderer.hpp"
 #include "../systems/texture/texture_manager.hpp"
 #include "../systems/grid/grid.hpp"
+#include "../systems/sprite-animation/sprite.hpp"
 
 class Game : public IGame
 {
@@ -26,6 +27,8 @@ private:
     bool isRunning;
 
     Grid mainGrid;
+
+    Sprite* fireSprite;
 
 private:
     Game();
