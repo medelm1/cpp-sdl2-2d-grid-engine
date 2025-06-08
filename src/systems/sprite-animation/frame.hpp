@@ -1,6 +1,8 @@
 #ifndef FRAME_H
 #define FRAME_H
 
+#include <iostream>
+
 #include "../common/size.hpp"
 #include "../common/coordinate.hpp"
 
@@ -24,7 +26,10 @@ public:
 
     void setDuration(int duration);
     void setSize(Size size);
-    void setCoordinate(Coordinate coordinate);
+
+    void setSizeAndDuration(Size size, int coordinate);
+
+    friend std::ostream& operator<<(std::ostream& os, const Frame& frame);
 };
 
 #endif

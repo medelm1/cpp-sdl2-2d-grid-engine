@@ -38,3 +38,9 @@ void Size::setHeight(int height)
 {
     m_height = height;
 }
+
+std::ostream& operator<<(std::ostream& os, const Size& size)
+{
+    os << "(" << size.m_width << " x " << size.m_height << ")";
+    return os;
+}

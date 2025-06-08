@@ -37,7 +37,17 @@ void Frame::setSize(Size size)
     m_size = size;
 }
 
-void Frame::setCoordinate(Coordinate coordinate)
+void Frame::setSizeAndDuration(Size size, int duration)
 {
-    m_coordinate = coordinate;
+    m_size = size;
+    m_duration = duration;
+}
+
+std::ostream& operator<<(std::ostream& os, const Frame& frame)
+{
+    os << "Frame("
+       << "Coordinate: " << frame.getCoordinate() << ", "
+       << "Size: " << frame.getSize() << ", "
+       << "Duration: " << frame.getDuration() << " ms)";
+    return os;
 }

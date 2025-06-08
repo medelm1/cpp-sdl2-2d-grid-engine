@@ -7,32 +7,24 @@ Sprite::Sprite(SDL_Texture* texture, GridSize sheetSize, Scale scale, bool bound
     m_scale(scale),
     m_boundingBoxEnabled(boundingBoxEnabled)
 {
-    init();
 
     m_animationController = new AnimationController(sheetSize);
 
-    Frame* frame0 = m_animationController->getFrame(0);
-    frame0->setSize(Size{32, 32}); 
-    frame0->setDuration(100);
+    (m_animationController->getFrame(0))->setSizeAndDuration(Size{32, 32}, 100);
+    (m_animationController->getFrame(1))->setSizeAndDuration(Size{32, 32}, 100);
+    (m_animationController->getFrame(2))->setSizeAndDuration(Size{32, 32}, 100);
+    (m_animationController->getFrame(3))->setSizeAndDuration(Size{32, 32}, 100);
 
-    // m_animationController->addAnimation(
-    //     "walking_down",
-    //     {
-    //         Frame(0, Size{32, 32}, 100),
-    //         Frame(1, Size{32, 32}, 100),
-    //         Frame(3, Size{32, 32}, 100),
-    //         Frame(4, Size{32, 32}, 100)
-    //     }
-    // );
-    // m_animationController->addAnimation(
-    //     "walking_up",
-    //     {
-    //         Frame(4, Size{32, 32}, 100),
-    //         Frame(5, Size{32, 32}, 100),
-    //         Frame(6, Size{32, 32}, 100),
-    //         Frame(7, Size{32, 32}, 100)
-    //     }
-    // );
+    m_animationController->addAnimation(
+        "burning", {
+            m_animationController->getFrame(0), 
+            m_animationController->getFrame(1), 
+            m_animationController->getFrame(2), 
+            m_animationController->getFrame(3)
+        }
+    );
+
+    m_animationController->playAnimation("burning");
 }
 
 bool Sprite::isBoundingBoxEnabled() const
@@ -49,21 +41,21 @@ void Sprite::render(SDL_Renderer* renderer, Vector2D position)
 {
     if (m_texture == nullptr) return;
 
-    Frame* activeFrame = m_animationController->getActiveFrame();
+    Frame* currentFrame = m_animationController->getCurrentFrame();
 
     // Set the src & dest rects dimentions
-    m_boundingRect.w = m_srcRect.w = activeFrame->getSize().getWidth();
-    m_boundingRect.h = m_srcRect.h = activeFrame->getSize().getHeight();
+    m_boundingRect.w = m_srcRect.w = currentFrame->getSize().getWidth();
+    m_boundingRect.h = m_srcRect.h = currentFrame->getSize().getHeight();
 
     // Scale sprite (to implement later)
 
     // Set src rect position (in texture)
-    m_srcRect.x = activeFrame->getCoordinate().getCol() * activeFrame->getSize().getWidth();
-    m_srcRect.y = activeFrame->getCoordinate().getRow() * activeFrame->getSize().getHeight();
+    m_srcRect.x = currentFrame->getCoordinate().getCol() * currentFrame->getSize().getWidth();
+    m_srcRect.y = currentFrame->getCoordinate().getRow() * currentFrame->getSize().getHeight();
 
     // Set dest rect position (in window) with offset
-    m_boundingRect.x = position.getX() * activeFrame->getSize().getWidth();
-    m_boundingRect.y = position.getY() * activeFrame->getSize().getHeight();
+    m_boundingRect.x = position.getX() * currentFrame->getSize().getWidth();
+    m_boundingRect.y = position.getY() * currentFrame->getSize().getHeight();
 
     SDL_RenderCopy(renderer, m_texture, &m_srcRect, &m_boundingRect);
 
@@ -77,5 +69,5 @@ void Sprite::render(SDL_Renderer* renderer, Vector2D position)
 
 void Sprite::update()
 {
-
+    m_animationController->updateCurrentAnimation();
 }

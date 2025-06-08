@@ -38,3 +38,9 @@ void Coordinate::setRow(int row)
 {
     m_row = row;
 }
+
+std::ostream& operator<<(std::ostream& os, const Coordinate& coord)
+{
+    os << "(" << coord.m_col << ", " << coord.m_row << ")";
+    return os;
+}

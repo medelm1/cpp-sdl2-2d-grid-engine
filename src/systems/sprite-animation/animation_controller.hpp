@@ -2,6 +2,9 @@
 #define ANIMATION_CONTROLLER_H
 
 #include <SDL.h>
+#include <sstream>
+#include <iostream>
+#include <stdexcept>
 #include <vector>
 #include <unordered_map>
 #include <string>
@@ -9,20 +12,27 @@
 #include "frame.hpp"
 #include "../common/coordinate.hpp"
 #include "../common/grid_size.hpp"
+#include "animation.hpp"
 
 class AnimationController
 {
 private:
-    // std::unordered_map<std::string, std::vector<Frame*>> m_animations;
+    std::vector<Animation*> m_animations;
 
     std::unordered_map<int, Frame*> m_frames;
 
     Frame* m_activeFrame;
+    std::string m_activeAnimationName;
 
-    GridSize m_gridSize;
+    int m_activeFrameStartTime;
 
 private:
-    void init();
+    bool isFrameExists(Frame* frame) const;
+
+    Animation* getAnimationByName(const std::string& name) const;
+    Animation* getPlayingAnimation();
+    
+    void stopAllAnimations();
 
 public:
     AnimationController(GridSize gridSize);
@@ -30,7 +40,13 @@ public:
 
     Frame* getFrame(int frameIndex);
 
-    Frame* getActiveFrame() const;
+    Frame* getCurrentFrame();
+
+    void addAnimation(const std::string& name, const std::vector<Frame*>& frames);
+
+    void playAnimation(const std::string& name);
+
+    void updateCurrentAnimation();
 };
 
 #endif

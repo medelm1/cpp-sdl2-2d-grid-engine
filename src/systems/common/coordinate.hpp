@@ -1,6 +1,8 @@
 #ifndef COORDINATE_H
 #define COORDINATE_H
 
+#include <iostream>
+
 class Coordinate
 {
 private:
@@ -16,6 +18,8 @@ public:
 
     void setCol(int col);
     void setRow(int row);
+
+    friend std::ostream& operator<<(std::ostream& os, const Coordinate& coord);
 
 };
 

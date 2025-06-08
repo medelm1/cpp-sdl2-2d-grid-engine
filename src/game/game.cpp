@@ -127,6 +127,8 @@ void Game::run()
 void Game::update()
 {
     InputHandler::getInstance().update(this);
+
+    fireSprite->update();
 }
 
 void Game::render()

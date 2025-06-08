@@ -1,6 +1,8 @@
 #ifndef SIZE_H
 #define SIZE_H
 
+#include <iostream>
+
 class Size
 {
 private:
@@ -16,6 +18,8 @@ public:
 
     void setWidth(int width);
     void setHeight(int height);
+
+    friend std::ostream& operator<<(std::ostream& os, const Size& size);
 
 };
 
