@@ -42,6 +42,8 @@ public:
     bool isBoundingBoxEnabled() const;
     void setBoundingBoxEnabled(bool enabled);
 
+    AnimationController* getAnimationController();
+
     void render(SDL_Renderer* renderer, Vector2D position);
 
     void update();

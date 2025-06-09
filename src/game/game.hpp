@@ -29,6 +29,7 @@ private:
     Grid mainGrid;
 
     Sprite* fireSprite;
+    Sprite* coinSprite;
 
 private:
     Game();

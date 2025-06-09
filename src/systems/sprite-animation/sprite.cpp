@@ -7,24 +7,7 @@ Sprite::Sprite(SDL_Texture* texture, GridSize sheetSize, Scale scale, bool bound
     m_scale(scale),
     m_boundingBoxEnabled(boundingBoxEnabled)
 {
-
     m_animationController = new AnimationController(sheetSize);
-
-    (m_animationController->getFrame(0))->setSizeAndDuration(Size{32, 32}, 100);
-    (m_animationController->getFrame(1))->setSizeAndDuration(Size{32, 32}, 100);
-    (m_animationController->getFrame(2))->setSizeAndDuration(Size{32, 32}, 100);
-    (m_animationController->getFrame(3))->setSizeAndDuration(Size{32, 32}, 100);
-
-    m_animationController->addAnimation(
-        "burning", {
-            m_animationController->getFrame(0), 
-            m_animationController->getFrame(1), 
-            m_animationController->getFrame(2), 
-            m_animationController->getFrame(3)
-        }
-    );
-
-    m_animationController->playAnimation("burning");
 }
 
 bool Sprite::isBoundingBoxEnabled() const
@@ -65,6 +48,11 @@ void Sprite::render(SDL_Renderer* renderer, Vector2D position)
         SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0xFF, 0xFF);
         SDL_RenderDrawRect(renderer, &m_boundingRect);
     }
+}
+
+AnimationController* Sprite::getAnimationController()
+{
+    return m_animationController;
 }
 
 void Sprite::update()

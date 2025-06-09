@@ -57,8 +57,7 @@ bool Game::init()
 
 
 
-    // Create fire sprite
-
+    // Fire Sprite + frame & animation configuration + start animation
     fireSprite = new Sprite(
         TextureManager::getInstance().getTexture("fire"),
         GridSize{4, 1},
@@ -66,6 +65,47 @@ bool Game::init()
         true
     );
 
+    (fireSprite->getAnimationController()->getFrame(0))->setSizeAndDuration(Size{32, 32}, 100);
+    (fireSprite->getAnimationController()->getFrame(1))->setSizeAndDuration(Size{32, 32}, 100);
+    (fireSprite->getAnimationController()->getFrame(2))->setSizeAndDuration(Size{32, 32}, 100);
+    (fireSprite->getAnimationController()->getFrame(3))->setSizeAndDuration(Size{32, 32}, 100);
+
+    fireSprite->getAnimationController()->addAnimation(
+        "burning", {
+            fireSprite->getAnimationController()->getFrame(0), 
+            fireSprite->getAnimationController()->getFrame(1), 
+            fireSprite->getAnimationController()->getFrame(2), 
+            fireSprite->getAnimationController()->getFrame(3)
+        }
+    );
+
+    fireSprite->getAnimationController()->playAnimation("burning");
+
+    // Coin Sprite + frame & animation configuration + start animation
+    coinSprite = new Sprite(
+        TextureManager::getInstance().getTexture("coin"),
+        GridSize{5, 1},
+        Scale{1, 1},
+        true
+    );
+
+    (coinSprite->getAnimationController()->getFrame(0))->setSizeAndDuration(Size{32, 32}, 50);
+    (coinSprite->getAnimationController()->getFrame(1))->setSizeAndDuration(Size{32, 32}, 80);
+    (coinSprite->getAnimationController()->getFrame(2))->setSizeAndDuration(Size{32, 32}, 110);
+    (coinSprite->getAnimationController()->getFrame(3))->setSizeAndDuration(Size{32, 32}, 200);
+    (coinSprite->getAnimationController()->getFrame(4))->setSizeAndDuration(Size{32, 32}, 500);
+
+    coinSprite->getAnimationController()->addAnimation(
+        "spinning", {
+            coinSprite->getAnimationController()->getFrame(0), 
+            coinSprite->getAnimationController()->getFrame(1), 
+            coinSprite->getAnimationController()->getFrame(2), 
+            coinSprite->getAnimationController()->getFrame(3),
+            coinSprite->getAnimationController()->getFrame(4)
+        }
+    );
+
+    coinSprite->getAnimationController()->playAnimation("spinning");
 
     return true;
 }
@@ -98,6 +138,7 @@ void Game::loadAssets()
     // Load images
     TextureManager::getInstance().load("green-gem", "assets/images/green-gem.png");
     TextureManager::getInstance().load("fire", "assets/images/fire.png");
+    TextureManager::getInstance().load("coin", "assets/images/coin.png");
 
 }
 
@@ -129,6 +170,7 @@ void Game::update()
     InputHandler::getInstance().update(this);
 
     fireSprite->update();
+    coinSprite->update();
 }
 
 void Game::render()
@@ -140,6 +182,8 @@ void Game::render()
 
 
     fireSprite->render(renderer, Vector2D{6, 4});
+
+    coinSprite->render(renderer, Vector2D{10, 10});
 
     SDL_RenderPresent(renderer);
 }
