@@ -55,43 +55,6 @@ bool Game::init()
     initSystems();
     loadAssets();
 
-
-
-    // Fire Sprite + frame & animation configuration + start animation
-
-    fireSprite = SpriteBuilder(TextureManager::getInstance().getTexture("fire"), GridSize{4, 1})
-        .withScale(Scale{1, 1})
-        .enableBoundingBox(false)
-        .setFrameSizes({
-            {0, Size{32, 32}}, 
-            {1, Size{32, 32}}, 
-            {2, Size{32, 32}}, 
-            {3, Size{32, 32}}
-        })
-        .setFrameDurations({
-            {0, 100}, 
-            {1, 100}, 
-            {2, 100}, 
-            {3, 100}
-        })
-        .addAnimation("burning", {0, 1, 2, 3})
-        .build();
-
-    fireSprite->playAnimation("burning");
-
-    // Coin Sprite + frame & animation configuration + start animation
-
-    coinSprite = SpriteBuilder(TextureManager::getInstance().getTexture("coin"), GridSize{5, 1})
-        .withScale(Scale{1, 1})
-        .enableBoundingBox(false)
-        .setUniformFrameSize(Size{32, 32})
-        .setUniformFrameDuration(120)
-        .addAnimation("right-spinning", {0, 1, 2, 3, 4})
-        .addAnimation("left-spinning", {4, 3, 2, 1, 0})
-        .build();
-
-    coinSprite->playAnimation("left-spinning");
-
     return true;
 }
 
@@ -108,8 +71,6 @@ void Game::initSystems()
     // Init Texture management system
     TextureManager::getInstance().init(renderer);
 
-    // Init grid
-    mainGrid = Grid(15, 20, 32);
 }
 
 void Game::loadAssets()
@@ -154,32 +115,12 @@ void Game::update()
 {
     InputHandler::getInstance().update(this);
 
-    fireSprite->update();
-    coinSprite->update();
-
-    if (InputHandler::getInstance().getLastKeyPressed() == SDL_SCANCODE_P)
-    {
-        coinSprite->pauseAnimation();
-    }
-
-    if (InputHandler::getInstance().getLastKeyPressed() == SDL_SCANCODE_N)
-    {
-        coinSprite->resumeAnimation();
-    }
-
 }
 
 void Game::render()
 {
     SDL_SetRenderDrawColor(renderer, 0x18, 0x21, 0x28, 0xFF);
     SDL_RenderClear(renderer);
-
-    mainGrid.drawLines(renderer);
-
-
-    fireSprite->render(renderer, Vector2D{6, 4});
-
-    coinSprite->render(renderer, Vector2D{10, 10});
 
     SDL_RenderPresent(renderer);
 }

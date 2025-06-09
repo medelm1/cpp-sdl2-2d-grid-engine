@@ -27,11 +27,6 @@ private:
     SDL_Renderer* renderer;
     bool isRunning;
 
-    Grid mainGrid;
-
-    Sprite* fireSprite;
-    Sprite* coinSprite;
-
 private:
     Game();
     void update();
