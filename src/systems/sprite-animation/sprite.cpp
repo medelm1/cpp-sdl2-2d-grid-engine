@@ -59,3 +59,33 @@ void Sprite::update()
 {
     m_animationController->updateCurrentAnimation();
 }
+
+Scale Sprite::getScale() const
+{
+    return m_scale;
+}
+
+void Sprite::setScale(Scale scale)
+{
+    m_scale = scale;
+}
+
+void Sprite::playAnimation(const std::string& animationName)
+{
+    m_animationController->play(animationName);
+}
+
+void Sprite::pauseAnimation()
+{
+    m_animationController->pause();
+}
+
+void Sprite::resumeAnimation()
+{
+    m_animationController->resume();
+}
+
+void Sprite::stopAnimation()
+{
+    
+}

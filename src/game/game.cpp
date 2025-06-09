@@ -58,54 +58,39 @@ bool Game::init()
 
 
     // Fire Sprite + frame & animation configuration + start animation
-    fireSprite = new Sprite(
-        TextureManager::getInstance().getTexture("fire"),
-        GridSize{4, 1},
-        Scale{1, 1},
-        true
-    );
 
-    (fireSprite->getAnimationController()->getFrame(0))->setSizeAndDuration(Size{32, 32}, 100);
-    (fireSprite->getAnimationController()->getFrame(1))->setSizeAndDuration(Size{32, 32}, 100);
-    (fireSprite->getAnimationController()->getFrame(2))->setSizeAndDuration(Size{32, 32}, 100);
-    (fireSprite->getAnimationController()->getFrame(3))->setSizeAndDuration(Size{32, 32}, 100);
+    fireSprite = SpriteBuilder(TextureManager::getInstance().getTexture("fire"), GridSize{4, 1})
+        .withScale(Scale{1, 1})
+        .enableBoundingBox(false)
+        .setFrameSizes({
+            {0, Size{32, 32}}, 
+            {1, Size{32, 32}}, 
+            {2, Size{32, 32}}, 
+            {3, Size{32, 32}}
+        })
+        .setFrameDurations({
+            {0, 100}, 
+            {1, 100}, 
+            {2, 100}, 
+            {3, 100}
+        })
+        .addAnimation("burning", {0, 1, 2, 3})
+        .build();
 
-    fireSprite->getAnimationController()->addAnimation(
-        "burning", {
-            fireSprite->getAnimationController()->getFrame(0), 
-            fireSprite->getAnimationController()->getFrame(1), 
-            fireSprite->getAnimationController()->getFrame(2), 
-            fireSprite->getAnimationController()->getFrame(3)
-        }
-    );
-
-    fireSprite->getAnimationController()->playAnimation("burning");
+    fireSprite->playAnimation("burning");
 
     // Coin Sprite + frame & animation configuration + start animation
-    coinSprite = new Sprite(
-        TextureManager::getInstance().getTexture("coin"),
-        GridSize{5, 1},
-        Scale{1, 1},
-        true
-    );
 
-    (coinSprite->getAnimationController()->getFrame(0))->setSizeAndDuration(Size{32, 32}, 50);
-    (coinSprite->getAnimationController()->getFrame(1))->setSizeAndDuration(Size{32, 32}, 80);
-    (coinSprite->getAnimationController()->getFrame(2))->setSizeAndDuration(Size{32, 32}, 110);
-    (coinSprite->getAnimationController()->getFrame(3))->setSizeAndDuration(Size{32, 32}, 200);
-    (coinSprite->getAnimationController()->getFrame(4))->setSizeAndDuration(Size{32, 32}, 500);
+    coinSprite = SpriteBuilder(TextureManager::getInstance().getTexture("coin"), GridSize{5, 1})
+        .withScale(Scale{1, 1})
+        .enableBoundingBox(false)
+        .setUniformFrameSize(Size{32, 32})
+        .setUniformFrameDuration(120)
+        .addAnimation("right-spinning", {0, 1, 2, 3, 4})
+        .addAnimation("left-spinning", {4, 3, 2, 1, 0})
+        .build();
 
-    coinSprite->getAnimationController()->addAnimation(
-        "spinning", {
-            coinSprite->getAnimationController()->getFrame(0), 
-            coinSprite->getAnimationController()->getFrame(1), 
-            coinSprite->getAnimationController()->getFrame(2), 
-            coinSprite->getAnimationController()->getFrame(3),
-            coinSprite->getAnimationController()->getFrame(4)
-        }
-    );
-
-    coinSprite->getAnimationController()->playAnimation("spinning");
+    coinSprite->playAnimation("left-spinning");
 
     return true;
 }
@@ -171,6 +156,17 @@ void Game::update()
 
     fireSprite->update();
     coinSprite->update();
+
+    if (InputHandler::getInstance().getLastKeyPressed() == SDL_SCANCODE_P)
+    {
+        coinSprite->pauseAnimation();
+    }
+
+    if (InputHandler::getInstance().getLastKeyPressed() == SDL_SCANCODE_N)
+    {
+        coinSprite->resumeAnimation();
+    }
+
 }
 
 void Game::render()

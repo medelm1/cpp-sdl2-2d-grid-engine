@@ -15,6 +15,7 @@ private:
     std::vector<Frame*> m_frames;
 
     bool m_isPlaying;
+    bool m_isPaused;
 
     Frame* m_currentFrame;
     int m_currentFrameStartTime;
@@ -28,10 +29,13 @@ public:
     void setName(const std::string& name);
 
     void start();
+    void pause();
+    void resume();
     void reset();
     void update();
 
     bool isPlaying() const;
+    bool isPaused() const;
     bool isEmpty() const;
 
     Frame* getCurrentFrame() const;

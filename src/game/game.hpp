@@ -15,6 +15,7 @@
 #include "../systems/texture/texture_manager.hpp"
 #include "../systems/grid/grid.hpp"
 #include "../systems/sprite-animation/sprite.hpp"
+#include "../systems/sprite-animation/sprite_builder.hpp"
 
 class Game : public IGame
 {

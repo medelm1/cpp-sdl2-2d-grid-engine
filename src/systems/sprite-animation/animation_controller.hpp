@@ -31,6 +31,7 @@ private:
 
     Animation* getAnimationByName(const std::string& name) const;
     Animation* getPlayingAnimation();
+    Animation* getPausedAnimation();
     
     void stopAllAnimations();
 
@@ -42,9 +43,13 @@ public:
 
     Frame* getCurrentFrame();
 
+    std::unordered_map<int, Frame*> getFrames();
+
     void addAnimation(const std::string& name, const std::vector<Frame*>& frames);
 
-    void playAnimation(const std::string& name);
+    void play(const std::string& animationName);
+    void pause();
+    void resume();
 
     void updateCurrentAnimation();
 };

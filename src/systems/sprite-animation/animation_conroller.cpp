@@ -114,6 +114,18 @@ Animation* AnimationController::getPlayingAnimation()
 
     return nullptr;
 }
+
+Animation* AnimationController::getPausedAnimation()
+{
+    for (Animation* animation : m_animations)
+    {
+        if (animation->isPaused())
+        {
+            return animation;
+        }
+    }
+    return nullptr;
+}
     
 void AnimationController::stopAllAnimations()
 {
@@ -123,9 +135,9 @@ void AnimationController::stopAllAnimations()
     }
 }
 
-void AnimationController::playAnimation(const std::string& name)
+void AnimationController::play(const std::string& animationName)
 {
-    Animation* animation = getAnimationByName(name);
+    Animation* animation = getAnimationByName(animationName);
 
     if (animation)
     {
@@ -135,8 +147,28 @@ void AnimationController::playAnimation(const std::string& name)
     else
     {
         std::ostringstream oss;
-        oss << "[AnimationController] Error: Animation not found: " << name;
+        oss << "[AnimationController] Error: Animation not found: " << animationName;
         throw std::runtime_error(oss.str());
+    }
+}
+
+void AnimationController::pause()
+{
+    Animation* animation = getPlayingAnimation();
+
+    if (animation)
+    {
+        animation->pause();
+    }
+}
+
+void AnimationController::resume()
+{
+    Animation* animation = getPausedAnimation();
+
+    if (animation)
+    {
+        animation->resume();
     }
 }
 
@@ -148,4 +180,9 @@ void AnimationController::updateCurrentAnimation()
     {
         animation->update();
     }
+}
+
+std::unordered_map<int, Frame*> AnimationController::getFrames()
+{
+    return m_frames;
 }

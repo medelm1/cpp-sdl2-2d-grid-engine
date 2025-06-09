@@ -42,7 +42,15 @@ public:
     bool isBoundingBoxEnabled() const;
     void setBoundingBoxEnabled(bool enabled);
 
+    Scale getScale() const;
+    void setScale(Scale scale);
+
     AnimationController* getAnimationController();
+
+    void playAnimation(const std::string& animationName);
+    void pauseAnimation();
+    void resumeAnimation();
+    void stopAnimation();
 
     void render(SDL_Renderer* renderer, Vector2D position);
 
