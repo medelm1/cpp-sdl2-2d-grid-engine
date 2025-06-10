@@ -14,8 +14,7 @@
 #include "../systems/text/text_renderer.hpp"
 #include "../systems/texture/texture_manager.hpp"
 #include "../systems/grid/grid.hpp"
-#include "../systems/sprite-animation/sprite.hpp"
-#include "../systems/sprite-animation/sprite_builder.hpp"
+#include "../entities/game_object.hpp"
 
 class Game : public IGame
 {
@@ -26,6 +25,10 @@ private:
     SDL_Window* window;
     SDL_Renderer* renderer;
     bool isRunning;
+
+    GameObject* bee;
+
+    Grid mainGrid;
 
 private:
     Game();

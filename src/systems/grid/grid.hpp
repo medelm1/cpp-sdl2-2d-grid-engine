@@ -54,6 +54,10 @@ public:
     void drawLines(SDL_Renderer* renderer);
 
     void clean();
+
+    void updateCells();
+
+    void renderCells(SDL_Renderer* renderer);
 };
 
 #endif

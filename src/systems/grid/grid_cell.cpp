@@ -92,3 +92,33 @@ void GridCell::clean()
     m_leftNeighbor = nullptr;
     m_rightNeighbor = nullptr;
 }
+
+void GridCell::addGameObject(GameObject* gameObject)
+{
+    if (gameObject)
+    {
+        m_gameObjects.push_back(gameObject);
+    }
+}
+
+void GridCell::updateGameObjects()
+{
+    for (GameObject* gameObject : m_gameObjects)
+    {
+        if (gameObject)
+        {
+            gameObject->update();
+        }
+    }
+}
+
+void GridCell::renderGameObjects(SDL_Renderer* renderer)
+{
+    for (GameObject* gameObject : m_gameObjects)
+    {
+        if (gameObject)
+        {
+            gameObject->render(renderer, m_coord);
+        }
+    }
+}

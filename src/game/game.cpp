@@ -55,6 +55,23 @@ bool Game::init()
     initSystems();
     loadAssets();
 
+
+    /////////// Init: TESTING /////////////////////////
+
+    bee = new GameObject();
+
+    mainGrid = Grid(15, 20, 32);
+
+    GridCell* cell = mainGrid.getCell(Vector2D{7, 7});
+
+    if (cell)
+    {
+        cell->addGameObject(bee);
+    }
+
+    /////////// TESTING /////////////////////////
+
+
     return true;
 }
 
@@ -85,6 +102,7 @@ void Game::loadAssets()
     TextureManager::getInstance().load("green-gem", "assets/images/green-gem.png");
     TextureManager::getInstance().load("fire", "assets/images/fire.png");
     TextureManager::getInstance().load("coin", "assets/images/coin.png");
+    TextureManager::getInstance().load("bee", "assets/images/bee.png");
 
 }
 
@@ -115,12 +133,45 @@ void Game::update()
 {
     InputHandler::getInstance().update(this);
 
+    ///////////////// TESTNG /////////////////
+
+    mainGrid.updateCells();
+
+    ////////////// TESTING ///////////////////////
 }
 
 void Game::render()
 {
     SDL_SetRenderDrawColor(renderer, 0x18, 0x21, 0x28, 0xFF);
     SDL_RenderClear(renderer);
+
+    /////////// TESTING //////////////////////////
+
+    TextRenderer::getInstance().render(
+        TextObject{
+            "Press UP, DOWN, LEFT or RIGHT arrows", 
+            TextStyle{
+                12, 
+                SDL_Color{0xFF, 0xFF, 0xFF, 0xFF}, SDL_Color{0x00, 0x00, 0x00, 0xFF}
+            }
+        }, 
+        Vector2D{32, 32}
+    );
+    TextRenderer::getInstance().render(
+        TextObject{
+            "to control the direction of the bee", 
+            TextStyle{
+                9, 
+                SDL_Color{0xFF, 0xFF, 0xFF, 0xFF}, SDL_Color{0x00, 0x00, 0x00, 0xFF}
+            }
+        }, 
+        Vector2D{32, 54}
+    );
+
+    mainGrid.renderCells(renderer);
+
+
+    //////////////// TESTING ///////////////////////////
 
     SDL_RenderPresent(renderer);
 }

@@ -209,3 +209,25 @@ void Grid::clean()
     }
     m_cells.clear();
 }
+
+void Grid::updateCells()
+{
+    for (auto [_, cellptr] : m_cells)
+    {
+        if (cellptr)
+        {
+            cellptr->updateGameObjects();
+        }
+    }
+}
+
+void Grid::renderCells(SDL_Renderer* renderer)
+{
+    for (auto [_, cellptr] : m_cells)
+    {
+        if (cellptr)
+        {
+            cellptr->renderGameObjects(renderer);
+        }
+    }
+}

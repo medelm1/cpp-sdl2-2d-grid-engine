@@ -7,6 +7,7 @@ set OUTPUT_NAME=g2de
 set SOURCE_DIR=src
 set SOURCE_FILES=%SOURCE_DIR%\*.cpp ^
 				%SOURCE_DIR%\game\*.cpp ^
+				%SOURCE_DIR%\entities\*.cpp ^
 				%SOURCE_DIR%\systems\common\*.cpp ^
 				%SOURCE_DIR%\systems\audio\*.cpp ^
 				%SOURCE_DIR%\systems\input\*.cpp ^

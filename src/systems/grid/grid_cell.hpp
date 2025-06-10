@@ -10,6 +10,8 @@
 #include "../../utils/vector_2d.hpp"
 #include "../common/direction.hpp"
 
+#include "../../entities/game_object.hpp"
+
 class GridCell
 {
 private:
@@ -19,6 +21,8 @@ private:
     GridCell* m_downNeighbor;
     GridCell* m_leftNeighbor;
     GridCell* m_rightNeighbor;
+
+    std::vector<GameObject*> m_gameObjects;
 
 public:
     GridCell();
@@ -49,6 +53,11 @@ public:
     bool operator!=(const GridCell& other);
 
     void clean();
+
+    void addGameObject(GameObject* gameObject);
+
+    void updateGameObjects();
+    void renderGameObjects(SDL_Renderer* renderer);
 };
 
 #endif
