@@ -1,25 +1,43 @@
 #include "game_object.hpp"
 
-GameObject::GameObject()
+GameObject::GameObject(GridCell* currentGridCell)
+    :
+    m_currentGridCell(currentGridCell)
 {
-    m_sprite = SpriteBuilder(TextureManager::getInstance().getTexture("bee"), GridSize{3, 4})
-        .withScale(Scale{1, 1})
-        .enableBoundingBox(false)
-        .setUniformFrameSize(Size{32, 32})
-        .setUniformFrameDuration(90)
-        .addAnimation("flying_up", {0, 1, 2})
-        .addAnimation("flying_left", {3, 4, 5})
-        .addAnimation("flying_down", {6, 7, 8})
-        .addAnimation("flying_right", {9, 10, 11})
-        .build();
-
-    m_sprite->playAnimation("flying_down");
+    
 }
 
 GameObject::~GameObject()
 {
     
 }
+
+void GameObject::buildSprite(std::function<void(Sprite** sprite)> func)
+{
+    func(&m_sprite);
+}
+
+void GameObject::move(Direction direction)
+{
+    if (!m_currentGridCell) return;
+
+    switch (direction)
+    {
+        case Direction::DIRECTION_UP:
+        case Direction::DIRECTION_DOWN:
+        case Direction::DIRECTION_LEFT:
+        case Direction::DIRECTION_RIGHT:
+            if (m_currentGridCell->hasNeighbor(direction))
+            {
+                m_currentGridCell = m_currentGridCell->getNextNeighbor(direction);
+            }
+            break;
+
+        default:
+            break;
+    }
+}
+
 
 void GameObject::update()
 {
@@ -29,10 +47,10 @@ void GameObject::update()
     }
 }
 
-void GameObject::render(SDL_Renderer* renderer, const Vector2D& currentPosition)
+void GameObject::render(SDL_Renderer* renderer)
 {
-    if (m_sprite)
+    if (m_sprite && m_currentGridCell)
     {
-        m_sprite->render(renderer, currentPosition);
+        m_sprite->render(renderer, m_currentGridCell->getPixels());
     }
 }

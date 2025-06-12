@@ -1,18 +1,12 @@
 #include "grid.hpp"
 
-Grid::Grid()
-    : m_rows(0), m_cols(0), m_cellSize(16)
-{
-
-}
-
-Grid::Grid(size_t rows, size_t cols, size_t cellSize)
-    : m_rows(rows), m_cols(cols), m_cellSize(cellSize)
+Grid::Grid(size_t rows, size_t cols, Size cellSize)
+    : m_rows(rows), m_cols(cols)
 {
     for (size_t index = 0; index < (m_rows * m_cols); index++)
     {
         // Create a new cell at the current grid coordinate
-        m_cells[index] = new GridCell(getCoordFromIndex(index, false));
+        m_cells[index] = new GridCell(getCoordFromIndex(index, false), cellSize);
 
         float x = m_cells[index]->getCoord().getX();
         float y = m_cells[index]->getCoord().getY();
@@ -135,19 +129,24 @@ size_t Grid::getIndexFromCoord(const Vector2D& coord, bool validate)
 
 void Grid::drawLines(SDL_Renderer* renderer)
 {
-    size_t windowWidth = m_cols * m_cellSize;
-    size_t windowHeight = m_rows * m_cellSize;
+    if (!m_cells.empty())
+    {
+        Size cellSize = m_cells.at(0)->getSize();
 
-    SDL_SetRenderDrawColor(renderer, 0x2D, 0x3A, 0x42, 0x40);
+        size_t windowWidth = m_cols * cellSize.getWidth();
+        size_t windowHeight = m_rows * cellSize.getHeight();
 
-    // Draw horizental lines
-    for (int y = m_cellSize; y < windowHeight ; y += m_cellSize) {
-        SDL_RenderDrawLine(renderer, 0, y, windowWidth, y);
-    }
+        SDL_SetRenderDrawColor(renderer, 0x2D, 0x3A, 0x42, 0x40);
 
-    // Draw vertical lines
-    for (int x = m_cellSize; x < windowWidth; x += m_cellSize) {
-        SDL_RenderDrawLine(renderer, x, 0, x, windowHeight);
+        // Draw horizental lines
+        for (int y = cellSize.getHeight(); y < windowHeight ; y += cellSize.getHeight()) {
+            SDL_RenderDrawLine(renderer, 0, y, windowWidth, y);
+        }
+
+        // Draw vertical lines
+        for (int x = cellSize.getWidth(); x < windowWidth; x += cellSize.getWidth()) {
+            SDL_RenderDrawLine(renderer, x, 0, x, windowHeight);
+        }
     }
 }
 
@@ -174,30 +173,24 @@ std::vector<GridCell*> Grid::findCells(std::function<bool(size_t, GridCell*)> pr
     return result;
 }
 
-Vector2D Grid::getPixelsFromCoord(Vector2D coord)
-{
-    return {
-        std::trunc(coord.getX() * m_cellSize),
-        std::trunc(coord.getY() * m_cellSize)
-    };
-}
-
-Vector2D Grid::getCoordFromPixels(Vector2D pixels)
-{
-    return {
-        std::trunc(pixels.getX() / m_cellSize),
-        std::trunc(pixels.getY() * m_cellSize)
-    };
-}
-
 Vector2D Grid::normalize(Vector2D pixels)
 {
-    Vector2D coord = getCoordFromPixels(pixels);
+    if (!m_cells.empty())
+    {
+        Size cellSize = m_cells.at(0)->getSize();
 
-    return {
-        coord.getX() * m_cellSize,
-        coord.getY() * m_cellSize
-    };
+        Vector2D coord = {
+            std::trunc(pixels.getX() / cellSize.getWidth()),
+            std::trunc(pixels.getY() * cellSize.getHeight())
+        };
+
+        return {
+            coord.getX() * cellSize.getWidth(),
+            coord.getY() * cellSize.getHeight()
+        };
+    }
+
+    return {-1, -1};
 }
 
 void Grid::clean()
@@ -208,26 +201,4 @@ void Grid::clean()
         delete cell;
     }
     m_cells.clear();
-}
-
-void Grid::updateCells()
-{
-    for (auto [_, cellptr] : m_cells)
-    {
-        if (cellptr)
-        {
-            cellptr->updateGameObjects();
-        }
-    }
-}
-
-void Grid::renderCells(SDL_Renderer* renderer)
-{
-    for (auto [_, cellptr] : m_cells)
-    {
-        if (cellptr)
-        {
-            cellptr->renderGameObjects(renderer);
-        }
-    }
 }

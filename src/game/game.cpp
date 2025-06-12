@@ -58,16 +58,33 @@ bool Game::init()
 
     /////////// Init: TESTING /////////////////////////
 
-    bee = new GameObject();
+    mainGrid = new Grid(15, 20, Size{32, 32});
 
-    mainGrid = Grid(15, 20, 32);
+    GridCell* gridCell = mainGrid->getCell(Vector2D{7, 7});
 
-    GridCell* cell = mainGrid.getCell(Vector2D{7, 7});
-
-    if (cell)
+    if (gridCell)
     {
-        cell->addGameObject(bee);
+    bee = new GameObject(gridCell);
     }
+
+    
+
+    bee->buildSprite([](Sprite** sprite) {
+
+        *sprite = SpriteBuilder(TextureManager::getInstance().getTexture("bee"), GridSize{3, 4})
+            .withScale(Scale{1, 1})
+            .enableBoundingBox(false)
+            .setUniformFrameSize(Size{32, 32})
+            .setUniformFrameDuration(90)
+            .addAnimation("flying_up", {0, 1, 2})
+            .addAnimation("flying_left", {3, 4, 5})
+            .addAnimation("flying_down", {6, 7, 8})
+            .addAnimation("flying_right", {9, 10, 11})
+            .build();
+
+        (*sprite)->playAnimation("flying_down");
+
+    });
 
     /////////// TESTING /////////////////////////
 
@@ -133,10 +150,31 @@ void Game::update()
 {
     InputHandler::getInstance().update(this);
 
-    ///////////////// TESTNG /////////////////
+    ///////////////// TESTING /////////////////
+    bee->update();
 
-    mainGrid.updateCells();
+    switch (InputHandler::getInstance().getLastKeyPressed())
+    {
+        case SDL_SCANCODE_UP:
+            bee->move(Direction::DIRECTION_UP);
+            break;
 
+        case SDL_SCANCODE_DOWN:
+            bee->move(Direction::DIRECTION_DOWN);
+            break;
+
+        case SDL_SCANCODE_LEFT:
+            bee->move(Direction::DIRECTION_LEFT);
+            break;
+
+        case SDL_SCANCODE_RIGHT:
+            bee->move(Direction::DIRECTION_RIGHT);
+            break;
+
+        default:
+            // No movement key pressed or irrelevant key
+            break;
+    }
     ////////////// TESTING ///////////////////////
 }
 
@@ -146,6 +184,8 @@ void Game::render()
     SDL_RenderClear(renderer);
 
     /////////// TESTING //////////////////////////
+
+    mainGrid->drawLines(renderer);
 
     TextRenderer::getInstance().render(
         TextObject{
@@ -168,7 +208,7 @@ void Game::render()
         Vector2D{32, 54}
     );
 
-    mainGrid.renderCells(renderer);
+    bee->render(renderer);
 
 
     //////////////// TESTING ///////////////////////////

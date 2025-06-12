@@ -37,8 +37,8 @@ void Sprite::render(SDL_Renderer* renderer, Vector2D position)
     m_srcRect.y = currentFrame->getCoordinate().getRow() * currentFrame->getSize().getHeight();
 
     // Set dest rect position (in window) with offset
-    m_boundingRect.x = position.getX() * currentFrame->getSize().getWidth();
-    m_boundingRect.y = position.getY() * currentFrame->getSize().getHeight();
+    m_boundingRect.x = position.getX();
+    m_boundingRect.y = position.getY();
 
     SDL_RenderCopy(renderer, m_texture, &m_srcRect, &m_boundingRect);
 

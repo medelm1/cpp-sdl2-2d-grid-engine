@@ -28,7 +28,7 @@ private:
 
     GameObject* bee;
 
-    Grid mainGrid;
+    Grid* mainGrid;
 
 private:
     Game();
