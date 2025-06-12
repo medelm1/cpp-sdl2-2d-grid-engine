@@ -9,12 +9,12 @@
 #include <vector>
 
 #include "game_interface.hpp"
-#include "../systems/input/input_handler.hpp"
-#include "../systems/audio/audio_manager.hpp"
-#include "../systems/text/text_renderer.hpp"
-#include "../systems/texture/texture_manager.hpp"
-#include "../systems/grid/grid.hpp"
-#include "../entities/game_object.hpp"
+#include "input_handler.hpp"
+#include "audio_manager.hpp"
+#include "text_renderer.hpp"
+#include "texture_manager.hpp"
+#include "grid.hpp"
+#include "game_object.hpp"
 
 class Game : public IGame
 {

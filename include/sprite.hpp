@@ -7,9 +7,9 @@
 #include <string>
 
 #include "animation_controller.hpp"
-#include "../common/grid_size.hpp"
-#include "../common/scale.hpp"
-#include "../../utils/vector_2d.hpp"
+#include "grid_size.hpp"
+#include "scale.hpp"
+#include "vector_2d.hpp"
 
 class Sprite
 {

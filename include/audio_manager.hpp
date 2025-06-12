@@ -10,8 +10,8 @@
 #include <unordered_set>
 #include <iostream>
 
-#include "../../game/game_interface.hpp"
-#include "enums/loop_mode.hpp"
+#include "game_interface.hpp"
+#include "loop_mode.hpp"
 
 class AudioManager
 {

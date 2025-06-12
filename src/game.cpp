@@ -189,7 +189,7 @@ void Game::render()
 
     TextRenderer::getInstance().render(
         TextObject{
-            "Press UP, DOWN, LEFT or RIGHT arrows", 
+            "Press UP, DOWN, LEFT, RIGHT arrows", 
             TextStyle{
                 12, 
                 SDL_Color{0xFF, 0xFF, 0xFF, 0xFF}, SDL_Color{0x00, 0x00, 0x00, 0xFF}

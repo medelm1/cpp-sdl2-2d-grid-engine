@@ -10,8 +10,8 @@
 #include <string>
 
 #include "frame.hpp"
-#include "../common/coordinate.hpp"
-#include "../common/grid_size.hpp"
+#include "coordinate.hpp"
+#include "grid_size.hpp"
 #include "animation.hpp"
 
 class AnimationController
