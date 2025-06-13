@@ -27,7 +27,7 @@ Built for tile-based gameplay, with a focus on simplicity, extensibility, and ex
 /src                 -> Source files matching header structure
 /assets              -> Game assets (images, sounds, etc.)
 /build               -> CMake build output (ignored by git)
-/external            -> Third-party libraries (e.g., SDL2)
+/lib                 -> Third-party libraries (e.g., SDL2)
 /docs                -> Documentation files (in progress)
 /CMakeLists.txt      -> Project build configuration
 ```
