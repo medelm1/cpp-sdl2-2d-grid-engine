@@ -3,7 +3,7 @@
 
 #include <string>
 
-#include "graphics/text/text_style.hpp"
+#include "graphics/text/TextStyle.hpp"
 
 class TextObject
 {

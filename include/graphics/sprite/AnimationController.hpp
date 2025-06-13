@@ -10,9 +10,9 @@
 #include <string>
 
 #include "frame.hpp"
-#include "math/coordinate.hpp"
-#include "grid/grid_size.hpp"
-#include "graphics/sprite/animation.hpp"
+#include "math/Coordinate.hpp"
+#include "grid/GridSize.hpp"
+#include "graphics/sprite/Animation.hpp"
 
 class AnimationController
 {

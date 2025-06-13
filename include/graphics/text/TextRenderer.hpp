@@ -8,9 +8,9 @@
 #include <unordered_map>
 #include <iostream>
 
-#include "game_interface.hpp"
-#include "graphics/text/text_object.hpp"
-#include "math/vector_2d.hpp"
+#include "IGame.hpp"
+#include "graphics/text/TextObject.hpp"
+#include "math/Vector2D.hpp"
 
 class TextRenderer
 {

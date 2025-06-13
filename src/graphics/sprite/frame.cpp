@@ -1,4 +1,4 @@
-#include "graphics/sprite/frame.hpp"
+#include "graphics/sprite/Frame.hpp"
 
 Frame::Frame(Coordinate coordinate)
     :

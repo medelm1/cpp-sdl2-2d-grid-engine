@@ -8,13 +8,13 @@
 #include <map>
 #include <vector>
 
-#include "game_interface.hpp"
-#include "input/input_handler.hpp"
-#include "audio/audio_manager.hpp"
-#include "graphics/text/text_renderer.hpp"
-#include "graphics/texture_manager.hpp"
-#include "grid/grid.hpp"
-#include "game_object.hpp"
+#include "IGame.hpp"
+#include "input/InputHandler.hpp"
+#include "audio/AudioManager.hpp"
+#include "graphics/text/TextRenderer.hpp"
+#include "graphics/TextureManager.hpp"
+#include "grid/Grid.hpp"
+#include "GameObject.hpp"
 
 class Game : public IGame
 {

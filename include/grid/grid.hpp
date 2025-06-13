@@ -7,7 +7,7 @@
 #include <vector>
 #include <SDL.h>
 
-#include "grid/grid_cell.hpp"
+#include "grid/GridCell.hpp"
 
 class Grid
 {

@@ -1,4 +1,4 @@
-#include "graphics/text/text_object.hpp"
+#include "graphics/text/TextObject.hpp"
 
 TextObject::TextObject()
     :

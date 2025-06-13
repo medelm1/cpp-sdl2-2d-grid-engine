@@ -1,4 +1,4 @@
-#include "graphics/text/text_renderer.hpp"
+#include "graphics/text/TextRenderer.hpp"
 
 TextRenderer* TextRenderer::instance = nullptr;
 

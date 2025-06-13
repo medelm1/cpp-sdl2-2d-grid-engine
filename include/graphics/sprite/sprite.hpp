@@ -6,10 +6,10 @@
 #include <vector>
 #include <string>
 
-#include "graphics/sprite/animation_controller.hpp"
-#include "grid/grid_size.hpp"
-#include "math/scale.hpp"
-#include "math/vector_2d.hpp"
+#include "graphics/sprite/AnimationController.hpp"
+#include "grid/GridSize.hpp"
+#include "math/Scale.hpp"
+#include "math/Vector2D.hpp"
 
 class Sprite
 {

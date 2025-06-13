@@ -1,4 +1,4 @@
-#include "math/size.hpp"
+#include "math/Size.hpp"
 
 Size::Size()
     :

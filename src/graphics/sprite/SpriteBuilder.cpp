@@ -1,4 +1,4 @@
-#include "graphics/sprite/sprite_builder.hpp"
+#include "graphics/sprite/SpriteBuilder.hpp"
 
 SpriteBuilder::SpriteBuilder(SDL_Texture* texture, GridSize sheetSize)
     :

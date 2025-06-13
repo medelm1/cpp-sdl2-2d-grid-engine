@@ -1,4 +1,4 @@
-#include "audio/audio_manager.hpp"
+#include "audio/AudioManager.hpp"
 
 AudioManager* AudioManager::instance = nullptr;
 

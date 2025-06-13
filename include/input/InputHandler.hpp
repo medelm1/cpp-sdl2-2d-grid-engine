@@ -5,9 +5,9 @@
 #include <algorithm>
 #include <SDL.h>
 
-#include "game_interface.hpp"
-#include "math/vector_2d.hpp"
-#include "types/mouse_button.hpp"
+#include "IGame.hpp"
+#include "math/Vector2D.hpp"
+#include "types/MouseButton.hpp"
 
 class InputHandler
 {

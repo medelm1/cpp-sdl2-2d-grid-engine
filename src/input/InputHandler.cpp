@@ -1,4 +1,4 @@
-#include "input/input_handler.hpp"
+#include "input/InputHandler.hpp"
 
 InputHandler* InputHandler::instance = nullptr;
 

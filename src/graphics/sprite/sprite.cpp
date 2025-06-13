@@ -1,4 +1,4 @@
-#include "graphics/sprite/sprite.hpp"
+#include "graphics/sprite/Sprite.hpp"
 
 Sprite::Sprite(SDL_Texture* texture, GridSize sheetSize, Scale scale, bool boundingBoxEnabled)
     :

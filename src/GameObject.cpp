@@ -1,4 +1,4 @@
-#include "game_object.hpp"
+#include "GameObject.hpp"
 
 GameObject::GameObject(GridCell* currentGridCell)
     :

@@ -1,4 +1,4 @@
-#include "math/scale.hpp"
+#include "math/Scale.hpp"
 
 Scale::Scale()
     :

@@ -1,4 +1,4 @@
-#include "grid/grid_cell.hpp"
+#include "grid/GridCell.hpp"
 
 GridCell::GridCell(const Vector2D& coord, Size size)
     :

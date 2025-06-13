@@ -1,4 +1,4 @@
-#include "graphics/text/text_style.hpp"
+#include "graphics/text/TextStyle.hpp"
 
 TextStyle::TextStyle()
     :

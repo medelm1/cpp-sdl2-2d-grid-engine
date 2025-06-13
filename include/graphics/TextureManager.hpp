@@ -7,7 +7,7 @@
 #include <string>
 #include <iostream>
 
-#include "game_interface.hpp"
+#include "IGame.hpp"
 
 class TextureManager
 {

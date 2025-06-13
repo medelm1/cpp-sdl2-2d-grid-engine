@@ -3,8 +3,8 @@
 
 #include <iostream>
 
-#include "math/size.hpp"
-#include "math/coordinate.hpp"
+#include "math/Size.hpp"
+#include "math/Coordinate.hpp"
 
 class Frame
 {

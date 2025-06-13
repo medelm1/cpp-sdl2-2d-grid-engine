@@ -7,11 +7,11 @@
 #include <random>
 #include <iterator>
 
-#include "math/vector_2d.hpp"
-#include "math/size.hpp"
-#include "types/direction.hpp"
+#include "math/Vector2D.hpp"
+#include "math/Size.hpp"
+#include "types/Direction.hpp"
 
-#include "game_object.hpp"
+#include "GameObject.hpp"
 
 class GridCell
 {

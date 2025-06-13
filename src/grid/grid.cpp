@@ -1,4 +1,4 @@
-#include "grid/grid.hpp"
+#include "grid/Grid.hpp"
 
 Grid::Grid(size_t rows, size_t cols, Size cellSize)
     : m_rows(rows), m_cols(cols)

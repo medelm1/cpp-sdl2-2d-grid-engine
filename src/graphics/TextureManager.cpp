@@ -1,4 +1,4 @@
-#include "graphics/texture_manager.hpp"
+#include "graphics/TextureManager.hpp"
 
 TextureManager* TextureManager::instance = nullptr;
 

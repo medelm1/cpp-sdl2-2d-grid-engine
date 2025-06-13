@@ -5,7 +5,7 @@
 #include <string>
 
 #include "SDL.h"
-#include "graphics/sprite/sprite.hpp"
+#include "graphics/sprite/Sprite.hpp"
 
 class SpriteBuilder
 {

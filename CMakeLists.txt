@@ -17,35 +17,35 @@ link_directories(
 # Add the source files
 add_executable(2dGridEngine 
 
-    src/audio/audio_manager.cpp
+    src/audio/AudioManager.cpp
 
-    src/graphics/sprite/animation.cpp
-    src/graphics/sprite/animation_conroller.cpp
-    src/graphics/sprite/frame.cpp
-    src/graphics/sprite/sprite.cpp
-    src/graphics/sprite/sprite_builder.cpp
+    src/graphics/sprite/Animation.cpp
+    src/graphics/sprite/AnimationController.cpp
+    src/graphics/sprite/Frame.cpp
+    src/graphics/sprite/Sprite.cpp
+    src/graphics/sprite/SpriteBuilder.cpp
 
-    src/graphics/text/text_object.cpp
-    src/graphics/text/text_renderer.cpp
-    src/graphics/text/text_style.cpp
+    src/graphics/text/TextObject.cpp
+    src/graphics/text/TextRenderer.cpp
+    src/graphics/text/TextStyle.cpp
 
-    src/graphics/texture_manager.cpp
+    src/graphics/TextureManager.cpp
 
-    src/grid/grid.cpp
-    src/grid/grid_cell.cpp
-    src/grid/grid_size.cpp
+    src/grid/Grid.cpp
+    src/grid/GridCell.cpp
+    src/grid/GridSize.cpp
 
-    src/input/input_handler.cpp
+    src/input/InputHandler.cpp
 
-    src/math/coordinate.cpp
-    src/math/offset.cpp
-    src/math/random.cpp
-    src/math/scale.cpp
-    src/math/size.cpp
-    src/math/vector_2d.cpp
+    src/math/Coordinate.cpp
+    src/math/Offset.cpp
+    src/math/Random.cpp
+    src/math/Scale.cpp
+    src/math/Size.cpp
+    src/math/Vector2D.cpp
 
-    src/game.cpp
-    src/game_object.cpp
+    src/Game.cpp
+    src/GameObject.cpp
 
     src/main.cpp 
 )

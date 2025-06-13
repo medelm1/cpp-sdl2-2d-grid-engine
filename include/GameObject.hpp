@@ -4,12 +4,11 @@
 #include <SDL.h>
 #include <functional>
 
-#include "graphics/sprite/sprite.hpp"
-#include "graphics/sprite/sprite_builder.hpp"
-#include "graphics/texture_manager.hpp"
-#include "math/vector_2d.hpp"
-
-#include "grid/grid_cell.hpp"
+#include "graphics/sprite/Sprite.hpp"
+#include "graphics/sprite/SpriteBuilder.hpp"
+#include "graphics/TextureManager.hpp"
+#include "math/Vector2D.hpp"
+#include "grid/GridCell.hpp"
 
 class GridCell;
 

@@ -1,4 +1,4 @@
-#include "graphics/sprite/animation.hpp"
+#include "graphics/sprite/Animation.hpp"
 
 Animation::Animation(const std::string& name, const std::vector<Frame*>& frames)
     :

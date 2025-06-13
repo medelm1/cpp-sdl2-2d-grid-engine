@@ -1,4 +1,4 @@
-#include "graphics/sprite/animation_controller.hpp"
+#include "graphics/sprite/AnimationController.hpp"
 
 AnimationController::AnimationController(GridSize gridSize)
 {
